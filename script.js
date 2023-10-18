@@ -89,6 +89,8 @@ function getWinner(playerScore, computerScore) {
 function startGame()
 {
     const choiceButtons = document.querySelectorAll(".choiceButton");
+    const playerScorecount = document.querySelector("#playerScorecount");
+    const computerScorecount = document.querySelector("#computerScorecount");
     let playerScore = 0;
     let computerScore = 0;
 
@@ -110,6 +112,7 @@ function startGame()
             if (roundWinner == "Player")
             {
                 playerScore++;
+                playerScorecount.textContent = "Player Score: " + playerScore;
                 if (playerScore == 5)
                 {
                     getWinner(playerScore, computerScore);
@@ -118,6 +121,7 @@ function startGame()
             else if (roundWinner == "Computer")
             {
                 computerScore++;
+                computerScorecount.textContent = "Computer Score: " + computerScore;
                 if (computerScore == 5)
                 {
                     getWinner(playerScore, computerScore);
