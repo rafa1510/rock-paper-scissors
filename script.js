@@ -17,69 +17,90 @@ function getComputerChoice()
 
 function playRound(playerSelection, computerChoice)
 {
+    const results = document.querySelector("#results");
+
     if (playerSelection == computerChoice)
     {
-        console.log("It's a tie!");
+        const p = document.createElement("p");
+        p.textContent = "It's a tie!";
+        results.appendChild(p);
         return("Tie");
     }
     else if (playerSelection == "ROCK" && computerChoice == "PAPER")
     {
-        console.log("You lose! Paper beats Rock");
+        const p = document.createElement("p");
+        p.textContent = "You lose! Paper beats Rock";
+        results.appendChild(p);
         return("Computer");
     }
     else if (playerSelection == "ROCK" && computerChoice == "SCISSORS")
     {
-        console.log("You win! Rock beats Scissors");
+        const p = document.createElement("p");
+        p.textContent = "You win! Rock beats Scissors";
+        results.appendChild(p);
         return("Player");
     }
     else if (playerSelection == "PAPER" && computerChoice == "ROCK")
     {
-        console.log("You win! Paper beats Rock");
+        const p = document.createElement("p");
+        p.textContent = "You win! Paper beats Rock";
+        results.appendChild(p);
         return("Player");
     }
     else if (playerSelection == "PAPER" && computerChoice == "SCISSORS")
     {
-        console.log("You lose! Scissors beats Paper");
+        const p = document.createElement("p");
+        p.textContent = "You lose! Scissors beats Paper";
+        results.appendChild(p);
         return("Computer");
     }
     else if (playerSelection == "SCISSORS" && computerChoice == "ROCK")
     {
-        console.log("You lose! Rock beats Scissors");
+        const p = document.createElement("p");
+        p.textContent = "You lose! Rock beats Scissors";
+        results.appendChild(p);
         return("Computer");
     }
     else if (playerSelection == "SCISSORS" && computerChoice == "PAPER")
     {
-        console.log("You win! Scissors beats Paper");
+        const p = document.createElement("p");
+        p.textContent = "You win! Scissors beats Paper";
+        results.appendChild(p);
         return("Player");
     }
 }
 
 function startGame()
 {
-    // Event listener for the choice buttons
-    let choiceButtons = document.querySelectorAll(".choiceButton");
-
+    const choiceButtons = document.querySelectorAll(".choiceButton");
     let playerScore = 0;
     let computerScore = 0;
 
-    while (playerScore <= 5 || computerScore <= 5)
-    {
-        choiceButtons.forEach(choice => {
-            choice.addEventListener("click", () => {
-                let playerSelection = choice.textContent;
-                let roundWinner = playRound(playerSelection, getComputerChoice());
-                if (roundWinner == "Player")
-                {
-                    playerScore++;
-                }
-                else if (roundWinner == "Computer")
-                {
-                    computerScore++;
-                }
-            })
+    let gameOver = true;
+
+    choiceButtons.forEach(choice => {
+        choice.addEventListener("click", () => {
+        let playerSelection = choice.textContent.toUpperCase();
+        let roundWinner = playRound(playerSelection, getComputerChoice());
+
+        if (roundWinner == "Player")
+        {
+            playerScore++;
+        }
+        else if (roundWinner == "Computer")
+        {
+            computerScore++;
+        }
+
         })
+    })
+
+    if (playerScore == 5 || computerScore == 5)
+    {
+        gameOver = false;
     }
 
+    //Finds who has the higher score
     if (playerScore > computerScore)
     {
         console.log("You win the game!");
@@ -90,4 +111,4 @@ function startGame()
     }
 }
 
-/* startGame(); */
+startGame();
