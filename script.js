@@ -56,35 +56,31 @@ function playRound(playerSelection, computerChoice)
 
 function startGame()
 {
+    // Event listener for the choice buttons
+    let choiceButtons = document.querySelectorAll(".choiceButton");
+
     let playerScore = 0;
     let computerScore = 0;
 
-    for (i = 0; i < 5; i++)
+    while (playerScore <= 5 || computerScore <= 5)
     {
-        let playerSelection = prompt("Rock, Paper or Scissors?");
-
-        let casePlayerSelection = playerSelection.toUpperCase();
-        if (casePlayerSelection != "ROCK" && casePlayerSelection != "PAPER" && casePlayerSelection != "SCISSORS")
-        {
-            console.log("Please input either Rock, Paper, or Scissors");
-        }
-
-        let roundWinner = playRound(casePlayerSelection, getComputerChoice());
-        if (roundWinner == "Player")
-        {
-            playerScore++;
-        }
-        else if (roundWinner == "Computer")
-        {
-            computerScore++;
-        }
+        choiceButtons.forEach(choice => {
+            choice.addEventListener("click", () => {
+                let playerSelection = choice.textContent;
+                let roundWinner = playRound(playerSelection, getComputerChoice());
+                if (roundWinner == "Player")
+                {
+                    playerScore++;
+                }
+                else if (roundWinner == "Computer")
+                {
+                    computerScore++;
+                }
+            })
+        })
     }
 
-    if (playerScore == computerScore)
-    {
-        console.log("It's a tied game");
-    }
-    else if (playerScore > computerScore)
+    if (playerScore > computerScore)
     {
         console.log("You win the game!");
     }
@@ -93,14 +89,5 @@ function startGame()
         console.log("You lose the game")
     }
 }
-
-// Event listeners for the Rock, Paper, and Scissors buttons
-
-let choiceButtons = document.querySelectorAll(".choiceButton");
-choiceButtons.forEach(choice => {
-    choice.addEventListener("click", () => {
-        console.log(choice.textContent);
-    })
-})
 
 /* startGame(); */
