@@ -14,6 +14,7 @@ function getComputerChoice()
         return("SCISSORS");
     }
 }
+
 function playRound(playerSelection, computerChoice)
 {
     if (playerSelection == computerChoice)
@@ -52,6 +53,7 @@ function playRound(playerSelection, computerChoice)
         return("Player");
     }
 }
+
 function startGame()
 {
     let playerScore = 0;
@@ -60,11 +62,13 @@ function startGame()
     for (i = 0; i < 5; i++)
     {
         let playerSelection = prompt("Rock, Paper or Scissors?");
+
         let casePlayerSelection = playerSelection.toUpperCase();
         if (casePlayerSelection != "ROCK" && casePlayerSelection != "PAPER" && casePlayerSelection != "SCISSORS")
         {
             console.log("Please input either Rock, Paper, or Scissors");
         }
+
         let roundWinner = playRound(casePlayerSelection, getComputerChoice());
         if (roundWinner == "Player")
         {
@@ -90,4 +94,13 @@ function startGame()
     }
 }
 
-startGame();
+// Event listeners for the Rock, Paper, and Scissors buttons
+
+let choiceButtons = document.querySelectorAll(".choiceButton");
+choiceButtons.forEach(choice => {
+    choice.addEventListener("click", () => {
+        console.log(choice.textContent);
+    })
+})
+
+/* startGame(); */
