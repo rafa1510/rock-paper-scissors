@@ -72,42 +72,50 @@ function playRound(playerSelection, computerChoice)
 
 function startGame()
 {
+    const results = document.querySelector("#results");
     const choiceButtons = document.querySelectorAll(".choiceButton");
     let playerScore = 0;
     let computerScore = 0;
 
-    let gameOver = true;
+    let gameOver = false;
 
     choiceButtons.forEach(choice => {
         choice.addEventListener("click", () => {
-        let playerSelection = choice.textContent.toUpperCase();
-        let roundWinner = playRound(playerSelection, getComputerChoice());
-
-        if (roundWinner == "Player")
+        if (gameOver == false)
         {
-            playerScore++;
+            if (playerScore == 5 || computerScore == 5)
+            {
+                gameOver = true;
+            }
+            
+            let playerSelection = choice.textContent.toUpperCase();
+            let roundWinner = playRound(playerSelection, getComputerChoice());
+        
+            if (roundWinner == "Player")
+            {
+                console.log(playerScore);
+                playerScore++;
+            }
+            else if (roundWinner == "Computer")
+            {
+                computerScore++;
+            }
         }
-        else if (roundWinner == "Computer")
-        {
-            computerScore++;
-        }
-
         })
+    
     })
 
-    if (playerScore == 5 || computerScore == 5)
+    if (playerScore == 5)
     {
-        gameOver = false;
+        const p = document.createElement("p");
+        p.textContent = "You win the game!";
+        results.appendChild(p);
     }
-
-    //Finds who has the higher score
-    if (playerScore > computerScore)
+    else if (computerScore == 5)
     {
-        console.log("You win the game!");
-    }
-    else if (computerScore > playerScore)
-    {
-        console.log("You lose the game")
+        const p = document.createElement("p");
+        p.textContent = "You win the game!";
+        results.appendChild(p);
     }
 }
 
