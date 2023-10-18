@@ -70,41 +70,8 @@ function playRound(playerSelection, computerChoice)
     }
 }
 
-function startGame()
-{
+function getWinner(playerScore, computerScore) {
     const results = document.querySelector("#results");
-    const choiceButtons = document.querySelectorAll(".choiceButton");
-    let playerScore = 0;
-    let computerScore = 0;
-
-    let gameOver = false;
-
-    choiceButtons.forEach(choice => {
-        choice.addEventListener("click", () => {
-        if (gameOver == false)
-        {
-            if (playerScore == 5 || computerScore == 5)
-            {
-                gameOver = true;
-            }
-            
-            let playerSelection = choice.textContent.toUpperCase();
-            let roundWinner = playRound(playerSelection, getComputerChoice());
-        
-            if (roundWinner == "Player")
-            {
-                console.log(playerScore);
-                playerScore++;
-            }
-            else if (roundWinner == "Computer")
-            {
-                computerScore++;
-            }
-        }
-        })
-    
-    })
-
     if (playerScore == 5)
     {
         const p = document.createElement("p");
@@ -114,9 +81,51 @@ function startGame()
     else if (computerScore == 5)
     {
         const p = document.createElement("p");
-        p.textContent = "You win the game!";
+        p.textContent = "You lose the game!";
         results.appendChild(p);
     }
+}
+
+function startGame()
+{
+    const choiceButtons = document.querySelectorAll(".choiceButton");
+    let playerScore = 0;
+    let computerScore = 0;
+
+    let gameOver = false;
+
+    choiceButtons.forEach(choice => {
+        choice.addEventListener("click", function playGame() {
+        if (playerScore == 5 || computerScore == 5)
+        {
+            gameOver = true;
+            choice.removeEventListener("click", playGame);
+        }
+
+        if (gameOver == false)
+        {
+            let playerSelection = choice.textContent.toUpperCase();
+            let roundWinner = playRound(playerSelection, getComputerChoice());
+        
+            if (roundWinner == "Player")
+            {
+                playerScore++;
+                if (playerScore == 5)
+                {
+                    getWinner(playerScore, computerScore);
+                }
+            }
+            else if (roundWinner == "Computer")
+            {
+                computerScore++;
+                if (computerScore == 5)
+                {
+                    getWinner(playerScore, computerScore);
+                }
+            }
+        }
+        })
+    })
 }
 
 startGame();
